@@ -10,10 +10,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.pervukhin.food_shop.data.retrofit.DishesService
 import ru.pervukhin.food_shop.data.retrofit.ImageService
+import ru.pervukhin.food_shop.data.retrofit.RepositoryRetrofit
+import ru.pervukhin.food_shop.domain.DishesRepository
 import javax.inject.Singleton
 
 @Module
 class RetrofitModule {
+
+    @Provides
+    @Singleton
+    fun provideDishesRepository(): DishesRepository {
+        return RepositoryRetrofit()
+    }
 
     @Provides
     @Singleton

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main">
+    app:startDestination="@id/home">
 
     <fragment
         android:id="@+id/basket"
@@ -16,7 +16,7 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/main"
+        android:id="@+id/home"
         android:name="ru.pervukhin.food_shop.ui.main.HomeFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_home" />
@@ -25,4 +25,9 @@
         android:name="ru.pervukhin.food_shop.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/category"
+        android:name="ru.pervukhin.food_shop.ui.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
 </navigation>
