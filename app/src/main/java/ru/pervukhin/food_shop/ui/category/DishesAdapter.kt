@@ -1,4 +1,4 @@
-package ru.pervukhin.food_shop.ui
+package ru.pervukhin.food_shop.ui.category
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import ru.pervukhin.food_shop.R
 import ru.pervukhin.food_shop.domain.Dishes
 
-class DishesAdapter() : RecyclerView.Adapter<DishesAdapter.DishesViewHolder>() {
+class DishesAdapter(private val listener: OnDishClickListener) : RecyclerView.Adapter<DishesAdapter.DishesViewHolder>() {
     private var list: List<Dishes> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishesViewHolder {
@@ -30,24 +30,42 @@ class DishesAdapter() : RecyclerView.Adapter<DishesAdapter.DishesViewHolder>() {
         val imageView3 = holder.itemView.findViewById<ImageView>(R.id.dishes3)
         val title3 = holder.itemView.findViewById<TextView>(R.id.title3)
 
+        layout1.setOnClickListener {
+            listener.onDishClick(list[position].id)
+        }
+        layout1.setOnClickListener {
+            listener.onDishClick(list[position + 1].id)
+        }
+        layout1.setOnClickListener {
+            listener.onDishClick(list[position + 2].id)
+        }
+
         val k = position * 3
-        if (k < list.size) {
-            title1.text = list[k].name
-            Glide.with(holder.itemView).load(list[k].imageUrl).into(imageView1)
+        layout1.visibility = View.VISIBLE
+        layout2.visibility = View.VISIBLE
+        layout3.visibility = View.VISIBLE
+
+        if ((list.size + (3 - ((list.size) % 3))) / 3 >= position + 1){
+            if (k < list.size) {
+                title1.text = list[k].name
+                Glide.with(holder.itemView).load(list[k].imageUrl).into(imageView1)
+            }
+            if (k + 1 < list.size) {
+                title2.text = list[k + 1].name
+                Glide.with(holder.itemView).load(list[k + 1].imageUrl).into(imageView2)
+            }else{
+                layout2.visibility = View.INVISIBLE
+            }
+            if (k + 2 < list.size) {
+                title3.text = list[k + 2].name
+                Glide.with(holder.itemView).load(list[k + 2].imageUrl).into(imageView3)
+            }else{
+                layout3.visibility = View.INVISIBLE
+            }
         }else{
-            layout1.visibility = View.INVISIBLE
-        }
-        if (k + 1 < list.size) {
-            title2.text = list[k + 1].name
-            Glide.with(holder.itemView).load(list[k + 1].imageUrl).into(imageView2)
-        }else{
-            layout2.visibility = View.INVISIBLE
-        }
-        if (k + 2 < list.size) {
-            title3.text = list[k + 2].name
-            Glide.with(holder.itemView).load(list[k + 2].imageUrl).into(imageView3)
-        }else{
-            layout3.visibility = View.INVISIBLE
+            layout1.visibility = View.GONE
+            layout2.visibility = View.GONE
+            layout3.visibility = View.GONE
         }
     }
 

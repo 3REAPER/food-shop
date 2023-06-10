@@ -30,6 +30,7 @@
             android:layout_marginTop="31dp"
             android:fontFamily="@font/sf_pro_display"
             android:text="Азиатская кухня"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,57 +48,83 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
-
-        <ImageView
-            android:id="@+id/all_dishes"
-            android:layout_width="wrap_content"
+        <HorizontalScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/selected_tag"
-            android:text="Все меню" />
+            android:scrollbarSize="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/salad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/tag"
-            android:text="Все меню" />
+                <TextView
+                    android:id="@+id/all_dishes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_dishes"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/sf_pro_display"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:background="@drawable/selected_tag"/>
 
-        <ImageView
-            android:id="@+id/with_rice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/tag"
-            android:text="Все меню" />
+                <TextView
+                    android:id="@+id/salad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/salad"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/sf_pro_display"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:background="@drawable/tag" />
 
-        <ImageView
-            android:id="@+id/with_fish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/tag"
-            android:text="Все меню" />
+                <TextView
+                    android:id="@+id/with_rice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/tag"
+                    android:fontFamily="@font/sf_pro_display"
+                    android:gravity="center"
+                    android:text="@string/with_rice"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/rolls"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/tag"
-            android:text="Все меню" />
+                <TextView
+                    android:id="@+id/with_fish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/with_fish"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/sf_pro_display"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:background="@drawable/tag" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/rolls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/rolls"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/sf_pro_display"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:background="@drawable/tag" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

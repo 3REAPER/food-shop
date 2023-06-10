@@ -9,6 +9,8 @@ import ru.pervukhin.food_shop.data.retrofit.RepositoryRetrofit
 import ru.pervukhin.food_shop.domain.DishesRepository
 import ru.pervukhin.food_shop.ui.category.CategoryFragment
 import ru.pervukhin.food_shop.ui.category.CategoryViewModel
+import ru.pervukhin.food_shop.ui.product.ProductFragment
+import ru.pervukhin.food_shop.ui.product.ProductViewModel
 import javax.inject.Singleton
 
 @Component(modules = [RetrofitModule::class])
@@ -16,6 +18,7 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(categoryViewModel: CategoryViewModel)
     fun inject(repositoryRetrofit: RepositoryRetrofit)
+    fun inject(productViewModel: ProductViewModel)
 
     fun dishesRepository(): DishesRepository
     fun retrofit(): Retrofit

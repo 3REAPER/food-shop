@@ -43,4 +43,21 @@ class RepositoryRetrofit: DishesRepository {
         }
         return listOf()
     }
+
+    override suspend fun getById(id: Int): Dishes? {
+        val dishesList = dishesService.getDishes().body()
+        if (dishesService.getDishes().isSuccessful) {
+            dishesList?.let {dishesListNotNull ->
+                for (dish in dishesListNotNull.dishes) {
+                    DishesMapper.dataToDomain(dish)?.let {
+                        if (it.id == id){
+                            return it
+                        }
+                    }
+                }
+            }
+        }
+        return null
+    }
+
 }

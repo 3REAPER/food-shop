@@ -9,4 +9,10 @@
     <string name="fast_food">Фастфуд</string>
     <string name="asian_kitchen">Азиатская кухня</string>
     <string name="soups">Супы</string>
+
+    <string name="all_dishes">Все меню</string>
+    <string name="salad">Салаты</string>
+    <string name="with_rice">С рисом</string>
+    <string name="with_fish">С рыбой</string>
+    <string name="rolls">Роллы</string>
 </resources>
