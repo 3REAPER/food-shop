@@ -33,10 +33,10 @@ class DishesAdapter(private val listener: OnDishClickListener) : RecyclerView.Ad
         layout1.setOnClickListener {
             listener.onDishClick(list[position].id)
         }
-        layout1.setOnClickListener {
+        layout2.setOnClickListener {
             listener.onDishClick(list[position + 1].id)
         }
-        layout1.setOnClickListener {
+        layout3.setOnClickListener {
             listener.onDishClick(list[position + 2].id)
         }
 
