@@ -24,9 +24,9 @@ class ProductFragment : DialogFragment() {
     ): View? {
         val fragment = inflater.inflate(R.layout.fragment_product, container, false)
         viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
-        val loading = fragment.findViewById<FrameLayout>(R.id.loading)
         val backgroundImage = fragment.findViewById<FrameLayout>(R.id.background_image)
         val dishesImage = fragment.findViewById<ImageView>(R.id.dishes_image)
+        val close = fragment.findViewById<ImageView>(R.id.close)
         val name = fragment.findViewById<TextView>(R.id.name)
         val priceAndWeight = fragment.findViewById<LinearLayout>(R.id.price_and_weight)
         val price = fragment.findViewById<TextView>(R.id.price)
@@ -41,7 +41,6 @@ class ProductFragment : DialogFragment() {
         viewModel.liveData.observe(viewLifecycleOwner){
             when(it) {
                 ProductViewModel.ProductState.Loading -> {
-                    loading.visibility = View.VISIBLE
                     backgroundImage.visibility = View.GONE
                     name.visibility = View.GONE
                     priceAndWeight.visibility = View.GONE
@@ -49,7 +48,6 @@ class ProductFragment : DialogFragment() {
                     addToCart.visibility = View.GONE
                 }
                 is ProductViewModel.ProductState.Success -> {
-                    loading.visibility = View.GONE
                     backgroundImage.visibility = View.VISIBLE
                     name.visibility = View.VISIBLE
                     priceAndWeight.visibility = View.VISIBLE
@@ -74,6 +72,10 @@ class ProductFragment : DialogFragment() {
 
                 }
             }
+        }
+
+        close.setOnClickListener {
+            dismiss()
         }
 
         return fragment

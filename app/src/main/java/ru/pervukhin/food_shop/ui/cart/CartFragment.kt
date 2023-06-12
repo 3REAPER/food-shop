@@ -11,9 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.RecyclerView
 import ru.pervukhin.food_shop.R
+import ru.pervukhin.food_shop.domain.CartDish
 
 class CartFragment : Fragment(), OnClickPlusMinusListener {
     private lateinit var viewModel: CartViewModel
+    private lateinit var buy: TextView
+    private lateinit var loading: FrameLayout
+    private lateinit var empty: TextView
+    private val adapter = CartAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,10 +26,11 @@ class CartFragment : Fragment(), OnClickPlusMinusListener {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_cart, container, false)
         viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
-        val loading = view.findViewById<FrameLayout>(R.id.loading)
-        val empty = view.findViewById<TextView>(R.id.empty)
+        loading = view.findViewById(R.id.loading)
+        empty = view.findViewById(R.id.empty)
+        buy = view.findViewById(R.id.buy)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-        val adapter = CartAdapter(this)
+        val adapter = adapter
 
         recyclerView.adapter = adapter
         viewModel.getAll()
@@ -36,7 +42,9 @@ class CartFragment : Fragment(), OnClickPlusMinusListener {
                 }
                 is CartViewModel.CartDishState.Success ->{
                     loading.visibility = View.GONE
-                    adapter.setList(it.cartDishList)
+                    adapter.list = it.cartDishList
+                    buy.setTextPrice(adapter.list)
+
                 }
                 CartViewModel.CartDishState.Empty->{
                     loading.visibility = View.GONE
@@ -50,13 +58,29 @@ class CartFragment : Fragment(), OnClickPlusMinusListener {
 
     override fun onClickPlus(id: Int) {
         viewModel.plusCountDish(id)
+        buy.setTextPrice(adapter.list)
     }
 
     override fun onClickMinus(id: Int) {
         viewModel.minusCountDish(id)
+        buy.setTextPrice(adapter.list)
+
+
     }
 
     override fun onZeroCount(id: Int) {
         viewModel.removeCartDishById(id)
+        loading.visibility = View.GONE
+        empty.visibility = View.VISIBLE
+        buy.setTextPrice(adapter.list)
     }
+
+    private fun TextView.setTextPrice(list: List<CartDish>){
+        var price = 0
+        for (cartDish in list){
+            price += cartDish.price * cartDish.count
+        }
+        text = resources.getString(R.string.buy) + " " +price.toString() +" " +"₽"
+    }
+
 }

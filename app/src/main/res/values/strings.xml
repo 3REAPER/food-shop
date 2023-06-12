@@ -16,5 +16,22 @@
     <string name="with_fish">С рыбой</string>
     <string name="rolls">Роллы</string>
     <string name="empty_dishes">Таких блюд нет</string>
+    <string name="empty_cart">Добавте в корзину блюдо</string>
     <string name="went_wrong">Что то пошло не так</string>
+    <string name="buy">Оплатить</string>
+
+    <string name="january">Января</string>
+    <string name="february">Февраля</string>
+    <string name="march">Марта</string>
+    <string name="april">Апреля</string>
+    <string name="may">Мая</string>
+    <string name="june">Июня</string>
+    <string name="juli">Июля</string>
+    <string name="august">Августа</string>
+    <string name="september">Сентября</string>
+    <string name="october">Октебря</string>
+    <string name="november">Ноября</string>
+    <string name="december">Декабря</string>
+    <string name="on_gps">Включите GPS</string>
+    <string name="pay">Оплатить</string>
 </resources>

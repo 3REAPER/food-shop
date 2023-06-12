@@ -1,8 +1,8 @@
 package ru.pervukhin.food_shop.domain
 
-interface GeoAndDateRepository {
+interface ProfileRepository {
 
     fun getDate(): String
 
-    fun getGeo(): String
+    fun getProfileImage(): Int
 }

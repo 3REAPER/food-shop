@@ -12,7 +12,11 @@ import ru.pervukhin.food_shop.domain.CartDish
 import ru.pervukhin.food_shop.domain.Dish
 
 class CartAdapter(val listener: OnClickPlusMinusListener) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
-    private var list: List<CartDish> = listOf()
+    var list: List<CartDish> = listOf()
+        set(list){
+            field = list
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
@@ -37,17 +41,19 @@ class CartAdapter(val listener: OnClickPlusMinusListener) : RecyclerView.Adapter
 
         minus.setOnClickListener {
             if (count.text.toString().toInt() - 1 != 0) {
+                cartDish.count -= 1
                 listener.onClickMinus(cartDish.id)
                 count.text = (count.text.toString().toInt() - 1).toString()
             }else{
-                listener.onZeroCount(cartDish.id)
                 list = list.minus(cartDish)
                 notifyDataSetChanged()
+                listener.onZeroCount(cartDish.id)
             }
         }
 
         plus.setOnClickListener {
             if (count.text.toString().toInt() + 1 < 100) {
+                cartDish.count += 1
                 listener.onClickPlus(cartDish.id)
                 count.text = (count.text.toString().toInt() + 1).toString()
             }
@@ -57,11 +63,6 @@ class CartAdapter(val listener: OnClickPlusMinusListener) : RecyclerView.Adapter
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    fun setList(list: List<CartDish>){
-        this.list = list
-        notifyDataSetChanged()
     }
 
     private fun TextView.setTextPrice(text: String){
