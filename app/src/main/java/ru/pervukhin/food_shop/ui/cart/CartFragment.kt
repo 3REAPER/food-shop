@@ -70,9 +70,13 @@ class CartFragment : Fragment(), OnClickPlusMinusListener {
 
     override fun onZeroCount(id: Int) {
         viewModel.removeCartDishById(id)
-        loading.visibility = View.GONE
-        empty.visibility = View.VISIBLE
-        buy.setTextPrice(adapter.list)
+        if (adapter.list.isEmpty()){
+            loading.visibility = View.GONE
+            empty.visibility = View.VISIBLE
+            buy.setText(R.string.pay)
+        }else{
+            buy.setTextPrice(adapter.list)
+        }
     }
 
     private fun TextView.setTextPrice(list: List<CartDish>){
