@@ -9,7 +9,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.pervukhin.food_shop.data.internet.DishesService
-import ru.pervukhin.food_shop.data.internet.ImageService
 import ru.pervukhin.food_shop.data.internet.RetrofitRepository
 import ru.pervukhin.food_shop.domain.DishRepository
 import javax.inject.Singleton
@@ -27,12 +26,6 @@ class RetrofitModule {
     @Singleton
     fun provideDishesService(retrofit: Retrofit): DishesService {
         return retrofit.create(DishesService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideImageService(retrofit: Retrofit): ImageService {
-        return retrofit.create(ImageService::class.java)
     }
 
     @Provides

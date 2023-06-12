@@ -1,4 +1,4 @@
-package ru.pervukhin.food_shop.ui.main
+package ru.pervukhin.food_shop.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

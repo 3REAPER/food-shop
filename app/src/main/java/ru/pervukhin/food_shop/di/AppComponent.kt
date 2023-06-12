@@ -5,14 +5,12 @@ import retrofit2.Retrofit
 import ru.pervukhin.food_shop.data.database.CartDishDao
 import ru.pervukhin.food_shop.data.database.RoomRepository
 import ru.pervukhin.food_shop.data.internet.DishesService
-import ru.pervukhin.food_shop.data.internet.ImageService
 import ru.pervukhin.food_shop.data.internet.RetrofitRepository
 import ru.pervukhin.food_shop.domain.CartDishRepository
 import ru.pervukhin.food_shop.domain.DishRepository
 import ru.pervukhin.food_shop.domain.ProfileRepository
 import ru.pervukhin.food_shop.ui.cart.CartViewModel
 import ru.pervukhin.food_shop.ui.category.CategoryViewModel
-import ru.pervukhin.food_shop.ui.location.LocationFragment
 import ru.pervukhin.food_shop.ui.location.LocationViewModel
 import ru.pervukhin.food_shop.ui.product.ProductViewModel
 import javax.inject.Singleton
@@ -30,7 +28,6 @@ interface AppComponent {
     fun dishesRepository(): DishRepository
     fun retrofit(): Retrofit
     fun dishesService(): DishesService
-    fun imageService(): ImageService
 
     fun cartDishRepository(): CartDishRepository
     fun cartDishDao(): CartDishDao

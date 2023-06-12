@@ -4,7 +4,7 @@ import ru.pervukhin.food_shop.domain.CartDish
 
 class CartDishMapper {
     companion object{
-        fun entityToDomain(cartDishEntity: CartDishEntity): CartDish {
+        private fun entityToDomain(cartDishEntity: CartDishEntity): CartDish {
             return CartDish(
                 cartDishEntity.id,
                 cartDishEntity.name,
@@ -34,18 +34,6 @@ class CartDishMapper {
                 cartDish.weight,
                 cartDish.imageUrl,
                 cartDish.count)
-        }
-
-        fun domainListToEntityList(cartDishList: List<CartDish>): List<CartDishEntity> {
-            var result: List<CartDishEntity> = listOf()
-            if (cartDishList.isNotEmpty()){
-                for (cartDish in cartDishList){
-                    result = result.plus(domainToEntity(cartDish))
-                }
-                return result
-            }else{
-                return listOf()
-            }
         }
     }
 }
