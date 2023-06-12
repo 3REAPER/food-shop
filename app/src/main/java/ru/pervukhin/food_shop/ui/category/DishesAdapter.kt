@@ -9,10 +9,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.pervukhin.food_shop.R
-import ru.pervukhin.food_shop.domain.Dishes
+import ru.pervukhin.food_shop.domain.Dish
 
 class DishesAdapter(private val listener: OnDishClickListener) : RecyclerView.Adapter<DishesAdapter.DishesViewHolder>() {
-    private var list: List<Dishes> = listOf()
+    private var list: List<Dish> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_dishes, parent, false)
@@ -30,17 +30,18 @@ class DishesAdapter(private val listener: OnDishClickListener) : RecyclerView.Ad
         val imageView3 = holder.itemView.findViewById<ImageView>(R.id.dishes3)
         val title3 = holder.itemView.findViewById<TextView>(R.id.title3)
 
+        val k = position * 3
+
         layout1.setOnClickListener {
-            listener.onDishClick(list[position].id)
+            listener.onDishClick(list[k].id)
         }
         layout2.setOnClickListener {
-            listener.onDishClick(list[position + 1].id)
+            listener.onDishClick(list[k + 1].id)
         }
         layout3.setOnClickListener {
-            listener.onDishClick(list[position + 2].id)
+            listener.onDishClick(list[k + 2].id)
         }
 
-        val k = position * 3
         layout1.visibility = View.VISIBLE
         layout2.visibility = View.VISIBLE
         layout3.visibility = View.VISIBLE
@@ -49,6 +50,8 @@ class DishesAdapter(private val listener: OnDishClickListener) : RecyclerView.Ad
             if (k < list.size) {
                 title1.text = list[k].name
                 Glide.with(holder.itemView).load(list[k].imageUrl).into(imageView1)
+            }else{
+                layout1.visibility = View.INVISIBLE
             }
             if (k + 1 < list.size) {
                 title2.text = list[k + 1].name
@@ -74,7 +77,7 @@ class DishesAdapter(private val listener: OnDishClickListener) : RecyclerView.Ad
         return list.size
     }
 
-    fun setList(list: List<Dishes>){
+    fun setList(list: List<Dish>){
         this.list = list
         notifyDataSetChanged()
     }

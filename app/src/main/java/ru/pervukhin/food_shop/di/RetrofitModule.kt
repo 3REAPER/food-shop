@@ -8,10 +8,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.pervukhin.food_shop.data.retrofit.DishesService
-import ru.pervukhin.food_shop.data.retrofit.ImageService
-import ru.pervukhin.food_shop.data.retrofit.RepositoryRetrofit
-import ru.pervukhin.food_shop.domain.DishesRepository
+import ru.pervukhin.food_shop.data.internet.DishesService
+import ru.pervukhin.food_shop.data.internet.ImageService
+import ru.pervukhin.food_shop.data.internet.RetrofitRepository
+import ru.pervukhin.food_shop.domain.DishRepository
 import javax.inject.Singleton
 
 @Module
@@ -19,8 +19,8 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideDishesRepository(): DishesRepository {
-        return RepositoryRetrofit()
+    fun provideDishesRepository(): DishRepository {
+        return RetrofitRepository()
     }
 
     @Provides
@@ -39,7 +39,7 @@ class RetrofitModule {
     @Singleton
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient) : Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://run.mocky.io")
+            .baseUrl("https://run.mocky.io/v3/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

@@ -1,7 +1,5 @@
-package ru.pervukhin.food_shop.data.retrofit.model
+package ru.pervukhin.food_shop.data.internet.model
 
-import android.graphics.drawable.Drawable
-import androidx.annotation.Nullable
 import com.google.gson.annotations.SerializedName
 
 class DishesData(

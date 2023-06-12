@@ -1,11 +1,11 @@
-package ru.pervukhin.food_shop.data.retrofit
+package ru.pervukhin.food_shop.data.internet
 
 import ru.pervukhin.food_shop.App
-import ru.pervukhin.food_shop.domain.Dishes
-import ru.pervukhin.food_shop.domain.DishesRepository
+import ru.pervukhin.food_shop.domain.Dish
+import ru.pervukhin.food_shop.domain.DishRepository
 import javax.inject.Inject
 
-class RepositoryRetrofit: DishesRepository {
+class RetrofitRepository: DishRepository {
     @Inject
     lateinit var dishesService: DishesService
 
@@ -13,7 +13,7 @@ class RepositoryRetrofit: DishesRepository {
         App.appComponent.inject(this)
     }
 
-    override suspend fun getAll(): List<Dishes> {
+    override suspend fun getAll(): List<Dish> {
         val dishes = dishesService.getDishes().body()
         if (dishesService.getDishes().isSuccessful) {
             dishes?.let {
@@ -23,8 +23,8 @@ class RepositoryRetrofit: DishesRepository {
         return listOf()
     }
 
-    override suspend fun getByTag(tag: String): List<Dishes> {
-        var result: List<Dishes> = listOf()
+    override suspend fun getByTag(tag: String): List<Dish> {
+        var result: List<Dish> = listOf()
         val dishesList = dishesService.getDishes().body()
         if (dishesService.getDishes().isSuccessful) {
             dishesList?.let {dishesListNotNull ->
@@ -44,7 +44,7 @@ class RepositoryRetrofit: DishesRepository {
         return listOf()
     }
 
-    override suspend fun getById(id: Int): Dishes? {
+    override suspend fun getById(id: Int): Dish? {
         val dishesList = dishesService.getDishes().body()
         if (dishesService.getDishes().isSuccessful) {
             dishesList?.let {dishesListNotNull ->

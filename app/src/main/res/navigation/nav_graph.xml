@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/basket"
-        android:name="ru.pervukhin.food_shop.ui.basket.BasketFragment"
+        android:name="ru.pervukhin.food_shop.ui.cart.CartFragment"
         android:label="fragment_basket"
-        tools:layout="@layout/fragment_basket" />
+        tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/profile"
         android:name="ru.pervukhin.food_shop.ui.profile.ProfileFragment"

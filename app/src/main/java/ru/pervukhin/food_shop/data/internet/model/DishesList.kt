@@ -1,4 +1,4 @@
-package ru.pervukhin.food_shop.data.retrofit.model
+package ru.pervukhin.food_shop.data.internet.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -6,22 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import ru.pervukhin.food_shop.MainActivity
 import ru.pervukhin.food_shop.R
 import ru.pervukhin.food_shop.domain.Category
-import ru.pervukhin.food_shop.domain.Dishes
+import ru.pervukhin.food_shop.domain.Dish
 import ru.pervukhin.food_shop.ui.product.ProductFragment
 
 class CategoryFragment : Fragment(), OnDishClickListener {
-
     private lateinit var viewModel: CategoryViewModel
-    lateinit var scrollView: HorizontalScrollView
-
+    private lateinit var scrollView: HorizontalScrollView
+    private var selectedTag = Dish.TAG_AlL_DISHES
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +33,8 @@ class CategoryFragment : Fragment(), OnDishClickListener {
         val tagWithRice = view.findViewById<TextView>(R.id.with_rice)
         val tagWithFish = view.findViewById<TextView>(R.id.with_fish)
         val tagRolls = view.findViewById<TextView>(R.id.rolls)
+        val loading = view.findViewById<FrameLayout>(R.id.loading)
+        val empty = view.findViewById<TextView>(R.id.empty)
         val back = view.findViewById<ImageView>(R.id.back)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = DishesAdapter(this)
@@ -44,7 +43,20 @@ class CategoryFragment : Fragment(), OnDishClickListener {
         viewModel.getAll()
 
         viewModel.repositoryLiveData.observe(viewLifecycleOwner){
-            adapter.setList(it)
+            when(it){
+                CategoryViewModel.DishesState.Loading -> loading.visibility = View.VISIBLE
+                is CategoryViewModel.DishesState.Success -> {
+                    if (selectedTag == it.tag) {
+                        adapter.setList(it.dishes)
+                        loading.visibility = View.GONE
+                        empty.visibility = View.GONE
+                    }
+                }
+                CategoryViewModel.DishesState.Empty ->{
+                    empty.visibility = View.VISIBLE
+                    loading.visibility = View.GONE
+                }
+            }
         }
 
         arguments.let {
@@ -59,32 +71,47 @@ class CategoryFragment : Fragment(), OnDishClickListener {
         }
 
         tagAllDishes.setOnClickListener {
-            tagSelected(tagAllDishes, tagSalad, tagWithRice, tagWithFish, tagRolls)
-            viewModel.getByTag(Dishes.TAG_AlL_DISHES)
+            if (selectedTag != Dish.TAG_AlL_DISHES) {
+                selectedTag = Dish.TAG_AlL_DISHES
+                tagSelected(tagAllDishes, tagSalad, tagWithRice, tagWithFish, tagRolls)
+                viewModel.getByTag(Dish.TAG_AlL_DISHES)
+            }
         }
 
 
         tagSalad.setOnClickListener {
-            tagSelected(tagSalad, tagAllDishes, tagWithRice, tagWithFish, tagRolls)
-            viewModel.getByTag(Dishes.TAG_SALAD)
+            if (selectedTag != Dish.TAG_SALAD) {
+                selectedTag = Dish.TAG_SALAD
+                tagSelected(tagSalad, tagAllDishes, tagWithRice, tagWithFish, tagRolls)
+                viewModel.getByTag(Dish.TAG_SALAD)
+            }
         }
 
 
         tagWithRice.setOnClickListener {
-            tagSelected(tagWithRice, tagAllDishes, tagSalad, tagWithFish, tagRolls)
-            viewModel.getByTag(Dishes.TAG_WITH_RICE)
+            if (selectedTag != Dish.TAG_WITH_RICE) {
+                selectedTag = Dish.TAG_WITH_RICE
+                tagSelected(tagWithRice, tagAllDishes, tagSalad, tagWithFish, tagRolls)
+                viewModel.getByTag(Dish.TAG_WITH_RICE)
+            }
         }
 
 
         tagWithFish.setOnClickListener {
-            tagSelected(tagWithFish, tagAllDishes, tagSalad, tagWithRice, tagRolls)
-            viewModel.getByTag(Dishes.TAG_WITH_FISH)
+            if (selectedTag != Dish.TAG_WITH_FISH) {
+                selectedTag = Dish.TAG_WITH_FISH
+                tagSelected(tagWithFish, tagAllDishes, tagSalad, tagWithRice, tagRolls)
+                viewModel.getByTag(Dish.TAG_WITH_FISH)
+            }
         }
 
 
         tagRolls.setOnClickListener {
-            tagSelected(tagRolls, tagAllDishes, tagSalad, tagWithRice, tagWithFish)
-            viewModel.getByTag(Dishes.TAG_WITH_ROLLS)
+            if (selectedTag != Dish.TAG_WITH_ROLLS) {
+                selectedTag = Dish.TAG_WITH_ROLLS
+                tagSelected(tagRolls, tagAllDishes, tagSalad, tagWithRice, tagWithFish)
+                viewModel.getByTag(Dish.TAG_WITH_ROLLS)
+            }
         }
 
         back.setOnClickListener {

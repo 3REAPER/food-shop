@@ -1,6 +1,6 @@
 package ru.pervukhin.food_shop.domain
 
-class Dishes(val id: Int, val name: String, val price: Int, val weight: Int, val description: String, val imageUrl: String, val tags: List<String>, ) {
+class Dish(val id: Int, val name: String, val price: Int, val weight: Int, val description: String, val imageUrl: String, val tags: List<String>, ) {
 
     companion object{
         const val TAG_AlL_DISHES = "Все меню"

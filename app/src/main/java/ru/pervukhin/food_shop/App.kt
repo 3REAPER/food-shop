@@ -4,6 +4,7 @@ import android.app.Application
 import ru.pervukhin.food_shop.di.AppComponent
 import ru.pervukhin.food_shop.di.DaggerAppComponent
 import ru.pervukhin.food_shop.di.RetrofitModule
+import ru.pervukhin.food_shop.di.RoomModule
 
 class App: Application() {
 
@@ -13,6 +14,8 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent.builder()
+            .roomModule(RoomModule(this))
+            .build()
     }
 }

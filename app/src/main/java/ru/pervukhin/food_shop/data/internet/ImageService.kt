@@ -1,4 +1,4 @@
-package ru.pervukhin.food_shop.data.retrofit
+package ru.pervukhin.food_shop.data.internet
 
 import okhttp3.ResponseBody
 import retrofit2.Response

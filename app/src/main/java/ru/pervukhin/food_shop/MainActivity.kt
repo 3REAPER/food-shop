@@ -1,12 +1,10 @@
 package ru.pervukhin.food_shop
 
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.pervukhin.food_shop.domain.Dishes
 
 class MainActivity : AppCompatActivity() {
     lateinit var navigationController: NavController

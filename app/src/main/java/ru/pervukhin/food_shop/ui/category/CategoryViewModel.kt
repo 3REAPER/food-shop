@@ -3,34 +3,56 @@ package ru.pervukhin.food_shop.ui.category
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import ru.pervukhin.food_shop.App
-import ru.pervukhin.food_shop.data.retrofit.DishesService
-import ru.pervukhin.food_shop.data.retrofit.RepositoryRetrofit
-import ru.pervukhin.food_shop.domain.Dishes
-import ru.pervukhin.food_shop.domain.DishesRepository
+import ru.pervukhin.food_shop.domain.Dish
+import ru.pervukhin.food_shop.domain.DishRepository
 import javax.inject.Inject
 
 class CategoryViewModel : ViewModel() {
-    val repositoryLiveData : MutableLiveData<List<Dishes>> = MutableLiveData()
+    val repositoryLiveData : MutableLiveData<DishesState> = MutableLiveData()
     @Inject
-    lateinit var dishesRepository: DishesRepository
+    lateinit var dishRepository: DishRepository
 
     init {
         App.appComponent.inject(this)
     }
 
     fun getAll(){
-        viewModelScope.launch {
-            repositoryLiveData.value = dishesRepository.getAll()
+        repositoryLiveData.value = DishesState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            dishRepository.getAll().let {
+                if (it.isEmpty()){
+                    launch(Dispatchers.Main) {
+                        repositoryLiveData.value = DishesState.Empty
+                    }
+                }else {
+                    launch(Dispatchers.Main) {
+                        repositoryLiveData.value = DishesState.Success(it, Dish.TAG_AlL_DISHES)
+                    }
+                }
+            }
         }
     }
 
     fun getByTag(tag: String){
+        repositoryLiveData.value = DishesState.Loading
         viewModelScope.launch {
-            repositoryLiveData.value = dishesRepository.getByTag(tag)
+            dishRepository.getByTag(tag).let {
+                if (it.isEmpty()){
+                    repositoryLiveData.value = DishesState.Empty
+                }else{
+                    repositoryLiveData.value = DishesState.Success(it, tag)
+                }
+            }
         }
+    }
+
+    sealed class DishesState {
+        data class Success(val dishes: List<Dish>, val tag: String): DishesState()
+        object Empty: DishesState()
+        object Loading: DishesState()
     }
 
 }

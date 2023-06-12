@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.get
 import androidx.lifecycle.viewModelScope
@@ -25,8 +24,11 @@ class ProductFragment : DialogFragment() {
     ): View? {
         val fragment = inflater.inflate(R.layout.fragment_product, container, false)
         viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        val loading = fragment.findViewById<FrameLayout>(R.id.loading)
+        val backgroundImage = fragment.findViewById<FrameLayout>(R.id.background_image)
         val dishesImage = fragment.findViewById<ImageView>(R.id.dishes_image)
         val name = fragment.findViewById<TextView>(R.id.name)
+        val priceAndWeight = fragment.findViewById<LinearLayout>(R.id.price_and_weight)
         val price = fragment.findViewById<TextView>(R.id.price)
         val weight = fragment.findViewById<TextView>(R.id.weight)
         val description = fragment.findViewById<TextView>(R.id.description)
@@ -37,17 +39,40 @@ class ProductFragment : DialogFragment() {
         }
 
         viewModel.liveData.observe(viewLifecycleOwner){
-            it?.let {
-                name.text = it.name
-                price.setTextPrice(it.price.toString())
-                weight.setTextWeight(it.weight.toString())
-                description.text = it.description
+            when(it) {
+                ProductViewModel.ProductState.Loading -> {
+                    loading.visibility = View.VISIBLE
+                    backgroundImage.visibility = View.GONE
+                    name.visibility = View.GONE
+                    priceAndWeight.visibility = View.GONE
+                    description.visibility = View.GONE
+                    addToCart.visibility = View.GONE
+                }
+                is ProductViewModel.ProductState.Success -> {
+                    loading.visibility = View.GONE
+                    backgroundImage.visibility = View.VISIBLE
+                    name.visibility = View.VISIBLE
+                    priceAndWeight.visibility = View.VISIBLE
+                    description.visibility = View.VISIBLE
+                    addToCart.visibility = View.VISIBLE
 
-                addToCart.setOnClickListener {
+                    name.text = it.dish.name
+                    price.setTextPrice(it.dish.price.toString())
+                    weight.setTextWeight(it.dish.weight.toString())
+                    description.text = it.dish.description
+
+                    addToCart.setOnClickListener {view ->
+                        viewModel.addToCart(it.dish)
+                        dismiss()
+                    }
+
+                    Glide.with(fragment).load(it.dish.imageUrl).into(dishesImage)
+                }
+                ProductViewModel.ProductState.Error -> {
+                    Toast.makeText(context, getString(R.string.went_wrong), Toast.LENGTH_LONG).show()
+                    dismiss()
 
                 }
-
-                Glide.with(fragment).load(it.imageUrl).into(dishesImage)
             }
         }
 
