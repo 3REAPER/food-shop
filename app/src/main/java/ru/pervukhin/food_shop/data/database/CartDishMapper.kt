@@ -4,7 +4,7 @@ import ru.pervukhin.food_shop.domain.CartDish
 
 class CartDishMapper {
     companion object{
-        private fun entityToDomain(cartDishEntity: CartDishEntity): CartDish {
+        fun entityToDomain(cartDishEntity: CartDishEntity): CartDish {
             return CartDish(
                 cartDishEntity.id,
                 cartDishEntity.name,

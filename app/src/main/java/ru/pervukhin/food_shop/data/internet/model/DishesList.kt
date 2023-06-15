@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 class DishesList(
   @SerializedName("dishes")
-  val dishes: List<DishesData>
+  val dishes: List<DishData>
 )

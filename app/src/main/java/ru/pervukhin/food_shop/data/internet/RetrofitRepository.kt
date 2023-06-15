@@ -17,7 +17,7 @@ class RetrofitRepository: DishRepository {
         dishesService.getDishes().let {
             if (it.isSuccessful) {
                 it.body()?.let { dishesList ->
-                    return DishesMapper.dataListToDomainList(dishesList.dishes)
+                    return DishDataMapper.dataListToDomainList(dishesList.dishes)
                 }
             }
             return listOf()
@@ -31,7 +31,7 @@ class RetrofitRepository: DishRepository {
             if (it.isSuccessful) {
                 it.body()?.let {dishesListNotNull ->
                     for (dish in dishesListNotNull.dishes) {
-                        DishesMapper.dataToDomain(dish)?.let {
+                        DishDataMapper.dataToDomain(dish)?.let {
                             for (tagFind in it.tags) {
                                 if (tag == tagFind){
                                     result = result.plus(it)
@@ -52,7 +52,7 @@ class RetrofitRepository: DishRepository {
             if (response.isSuccessful) {
                 response.body()?.let {dishesListNotNull ->
                     for (dish in dishesListNotNull.dishes) {
-                        DishesMapper.dataToDomain(dish)?.let {
+                        DishDataMapper.dataToDomain(dish)?.let {
                             if (it.id == id){
                                 return it
                             }
