@@ -34,7 +34,7 @@ class CategoryFragment : Fragment(), OnDishClickListener {
         val tagWithFish = view.findViewById<TextView>(R.id.with_fish)
         val tagRolls = view.findViewById<TextView>(R.id.rolls)
         val loading = view.findViewById<FrameLayout>(R.id.loading)
-        val empty = view.findViewById<TextView>(R.id.empty)
+        val condition = view.findViewById<TextView>(R.id.condition)
         val back = view.findViewById<ImageView>(R.id.back)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = DishesAdapter(this)
@@ -49,11 +49,17 @@ class CategoryFragment : Fragment(), OnDishClickListener {
                     if (selectedTag == it.tag) {
                         adapter.setList(it.dishes)
                         loading.visibility = View.GONE
-                        empty.visibility = View.GONE
+                        condition.visibility = View.GONE
                     }
                 }
                 CategoryViewModel.DishesState.Empty ->{
-                    empty.visibility = View.VISIBLE
+                    condition.text = resources.getString(R.string.empty_dishes)
+                    condition.visibility = View.VISIBLE
+                    loading.visibility = View.GONE
+                }
+                CategoryViewModel.DishesState.NoInternetConnection -> {
+                    condition.text = resources.getString(R.string.no_internet)
+                    condition.visibility = View.VISIBLE
                     loading.visibility = View.GONE
                 }
             }

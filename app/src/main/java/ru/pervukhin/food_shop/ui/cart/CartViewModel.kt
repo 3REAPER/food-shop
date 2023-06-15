@@ -21,35 +21,32 @@ class CartViewModel : ViewModel() {
 
     fun getAll(){
         cartDishLiveData.value = CartDishState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch  {
             cartDishRepository.getAll().let {
                 if (it.isNotEmpty()){
-                    launch(Dispatchers.Main) {
-                        cartDishLiveData.value = CartDishState.Success(it)
-                    }
+                    cartDishLiveData.value = CartDishState.Success(it)
                 }else{
-                    launch(Dispatchers.Main) {
-                        cartDishLiveData.value = CartDishState.Empty
-                    }
+                    cartDishLiveData.value = CartDishState.Empty
+
                 }
             }
         }
     }
 
     fun removeCartDishById(id: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             cartDishRepository.removeCartDishById(id)
         }
     }
 
     fun plusCountDish(id: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             cartDishRepository.plusCountDish(id)
         }
     }
 
     fun minusCountDish(id: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             cartDishRepository.minusCountDish(id)
         }
     }

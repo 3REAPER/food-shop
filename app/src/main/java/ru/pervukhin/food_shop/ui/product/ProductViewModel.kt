@@ -7,10 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.pervukhin.food_shop.App
 import ru.pervukhin.food_shop.data.database.CartDishMapper
-import ru.pervukhin.food_shop.domain.CartDishRepository
-import ru.pervukhin.food_shop.domain.Dish
-import ru.pervukhin.food_shop.domain.DishMapper
-import ru.pervukhin.food_shop.domain.DishRepository
+import ru.pervukhin.food_shop.domain.*
 import javax.inject.Inject
 
 class ProductViewModel : ViewModel() {
@@ -19,6 +16,8 @@ class ProductViewModel : ViewModel() {
     lateinit var dishRepository: DishRepository
     @Inject
     lateinit var cartDishRepository: CartDishRepository
+    @Inject
+    lateinit var internetConnection: InternetConnection
 
     init {
         App.appComponent.inject(this)
@@ -27,18 +26,22 @@ class ProductViewModel : ViewModel() {
     fun getDishesById(id: Int){
         liveData.value = ProductState.Loading
         viewModelScope.launch {
-            dishRepository.getById(id).let {
-                if (it != null){
-                    liveData.value = ProductState.Success(it)
-                }else{
-                    liveData.value = ProductState.Error
+            if (internetConnection.hasInternet()) {
+                dishRepository.getById(id).let {
+                    if (it != null) {
+                        liveData.value = ProductState.Success(it)
+                    } else {
+                        liveData.value = ProductState.Error
+                    }
                 }
+            }else{
+                liveData.value = ProductState.NoInternetConnection
             }
         }
     }
 
     fun addToCart(dish: Dish){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             cartDishRepository.addCartDish(DishMapper.dishToCart(dish))
         }
     }
@@ -47,4 +50,5 @@ class ProductViewModel : ViewModel() {
         data class Success(val dish: Dish): ProductState()
         object Error: ProductState()
         object Loading: ProductState()
+        object NoInternetConnection: ProductState()
     }}

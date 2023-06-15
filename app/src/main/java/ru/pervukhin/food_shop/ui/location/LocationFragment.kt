@@ -110,8 +110,13 @@ class LocationFragment : Fragment(), LocationListener {
     }
 
     private fun getCityByLocation(location: Location): String{
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        return addresses[0].subAdminArea.replace("город", "")
+        try {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            return addresses[0].subAdminArea.replace("город", "")
+        }catch (e: Exception){
+            e.printStackTrace()
+            return resources.getString(R.string.went_wrong)
+        }
     }
 }

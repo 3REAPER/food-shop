@@ -8,6 +8,7 @@ import ru.pervukhin.food_shop.data.internet.DishesService
 import ru.pervukhin.food_shop.data.internet.RetrofitRepository
 import ru.pervukhin.food_shop.domain.CartDishRepository
 import ru.pervukhin.food_shop.domain.DishRepository
+import ru.pervukhin.food_shop.domain.InternetConnection
 import ru.pervukhin.food_shop.domain.ProfileRepository
 import ru.pervukhin.food_shop.ui.cart.CartViewModel
 import ru.pervukhin.food_shop.ui.category.CategoryViewModel
@@ -28,6 +29,7 @@ interface AppComponent {
     fun dishesRepository(): DishRepository
     fun retrofit(): Retrofit
     fun dishesService(): DishesService
+    fun internetConnection(): InternetConnection
 
     fun cartDishRepository(): CartDishRepository
     fun cartDishDao(): CartDishDao

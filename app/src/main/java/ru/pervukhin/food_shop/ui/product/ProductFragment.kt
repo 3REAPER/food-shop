@@ -71,6 +71,10 @@ class ProductFragment : DialogFragment() {
                     dismiss()
 
                 }
+                ProductViewModel.ProductState.NoInternetConnection -> {
+                    Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show()
+                    dismiss()
+                }
             }
         }
 
