@@ -11,7 +11,7 @@ import ru.pervukhin.food_shop.domain.CartDish
 import ru.pervukhin.food_shop.domain.Dish
 import ru.pervukhin.food_shop.domain.DishMapper
 
-class TestMapper {
+class MapperTest {
 
     @Test
     fun testDishToCart() {
