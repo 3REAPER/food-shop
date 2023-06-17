@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = resources.getColor(R.color.white)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.statusBarColor = resources.getColor(R.color.white, theme)
         }
         navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
         val bottomNavigationBar: BottomNavigationView = findViewById(R.id.bottom_navigation_bar)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.pervukhin.food_shop.MainActivity
 import ru.pervukhin.food_shop.R
@@ -142,6 +143,6 @@ class CategoryFragment : Fragment(), OnDishClickListener {
         val bundle = Bundle()
         bundle.putInt(ProductFragment.TAG_BUNDLE, id)
         dialogFragment.arguments = bundle
-        fragmentManager?.let { dialogFragment.show(it, ProductFragment.TAG) }
+        activity?.supportFragmentManager?.let { dialogFragment.show(it, ProductFragment.TAG) }
     }
 }
